@@ -1,11 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<?php 
+include 'header.php';
+?>
 <body>
-    <h1>hi</h1>
+    <header class="header">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                    <a class="navbar-item" href="index.php">
+                        <strong>Home</strong>
+                    </a>
+                    <a class="navbar-item" href="all_posts.php">
+                        <strong>All Posts</strong>
+                    </a>
+                    <a class="navbar-item" href="user_panel.php">
+                        <strong>User Panel</strong>
+                    </a>
+            </div>
+        </nav>
+    </header>
+
+
+
 </body>
-</html>
+
+<?php 
+include 'footer.php';
+?>
