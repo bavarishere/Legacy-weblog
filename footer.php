@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="content has-text-centered">
         <p>
-            <strong>Legacy Weblog</strong> by <a href="#">Bavar</a>
+            <strong>© 2025 <a href="#">BAVAR</a> Weblog System. All rights reserved.</strong>
         </p>
     </div>
 </footer>
