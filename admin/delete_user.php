@@ -2,8 +2,8 @@
 session_start();
 include '../header.php';
 include '../db.php';
-if (($_SESSION['is_admin']) === true) {?>
-<?php
+if (($_SESSION['is_admin']) === true) {
+
         if (isset($_GET['user_id'])) {
             $user_id = $_GET['user_id'];
 
@@ -15,7 +15,9 @@ if (($_SESSION['is_admin']) === true) {?>
                 echo "<p>Error deleting user: " . mysqli_error($conn) . "</p>";
             }
         }
-        ?>
-<?php
+    
+} else {
+    header("Location: 403.php");
+    exit;
 }
 ?>
