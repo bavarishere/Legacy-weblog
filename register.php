@@ -1,102 +1,66 @@
-<?php 
+<?php
+session_start();
 include 'header.php';
 include 'db.php';
 ?>
 
 <?php
 
-$name = $_POST['name'] ?? '';
-$username = $_POST['username'] ?? '';
-$email = $_POST['email'] ?? '';
-$password = $_POST['password'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+   
+    $frist_name = $_POST['frist_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-if (isset($_POST['submit'])) {
-  if(empty($_POST['name'])){
-    echo "<div class='notification is-danger'><button class='delete'></button>error: Name is required</div>";
-  } elseif (empty($_POST['username'])) {
-    echo "<div class='notification is-danger'><button class='delete'></button>error: Username is required</div>";
-  } elseif (empty($_POST['email'])) {
-    echo "<div class='notification is-danger'><button class='delete'></button>error: Email is required</div>";
-  } elseif (empty($_POST['password'])) {
-    echo "<div class='notification is-danger'><button class='delete'></button>error: Password is required</div>";
-  } else {
-    echo "<div class='notification is-success'><button class='delete'></button>Success: User registered successfully!</div>";
-  }
+    
+    $sql = "INSERT INTO `users` (frist_name, username, email, password) VALUES ('$frist_name', '$username', '$email', '$password')";
+    $result = mysqli_query($conn, $sql);
+
+        if ($result === true){
+            $user_id = mysqli_insert_id($conn);
+
+            $_SESSION['is_logged'] = true;
+            $_SESSION['username']  = $username;
+            $_SESSION['user_id']   = $user_id;
+            $_SESSION['frist_name'] = $frist_name;
+            header("Location: index.php");
+            exit;
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+
 }
 
 ?>
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-      const $notification = $delete.parentNode;
-
-      $delete.addEventListener('click', () => {
-        $notification.parentNode.removeChild($notification);
-      });
-    });
-  });
-</script>
-
-
-
 <body>
-  <section class="hero" style="background-color: #303030ff;">
-    <div class="hero-body">
-      <div class="container is-max-tablet">
-        <h1 class="title">Registration Page</h1>
-        <h2 class="subtitle">Create your account</h2>
-      </div>
-    </div>
-  </section>
-  <div class="container is-max-tablet mt-5">
-
-    <!-- this is form code -->
-    <form class="box" action="register.php" method="POST">
-      
-      <div class="field">
-          <label class="label">Name</label>
-          <div class="control">
-            <input class="input" name="name" type="text" placeholder="Enter your name" value=<?php echo $name; ?>>
-          </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Username</label>
-        <div class="control">
-          <input class="input" name="username" type="text" placeholder="Choose a username" value=<?php echo $username; ?>>
+    <form action="register.php" method="POST">
+        <h2>Register</h2>
+        <div>
+            <label for="frist_name">Name:</label>
+            <input type="text" id="frist_name" name="frist_name" required><br><br>
         </div>
-      </div>
-
-      <div class="field">
-          <label class="label">Email</label>
-          <div class="control">
-            <input class="input" name="email" type="email" placeholder="Enter your email" value=<?php echo $email; ?>>
-          </div>
-      </div>
-      
-      <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-          <input class="input" name="password" type="password" placeholder="Create a password">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
         </div>
-      </div>
-
-      <div class="section">
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <input class="button is-primary navbar-center" name="submit" type="submit" value="Register">
+        <div>
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="email" required><br><br>
         </div>
-      </div>
-
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
     </form>
-    <div class="section">
-    </div>
-  </div>
+    <button><a href="google_login.php">Sign in with Google</a></button><br>
 </body>
-<?php 
+
+
+<?php
 include 'footer.php';
 ?>

@@ -1,7 +1,6 @@
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            <strong>© 2025 <a href="#">BAVAR</a> Weblog System. All rights reserved.</strong>
-        </p>
-    </div>
+</body>
+<footer>
+    <p>&copy; 2025 Bavar Weblog System. All rights reserved.</p>
 </footer>
+</body>
+</html>

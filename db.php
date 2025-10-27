@@ -1,16 +1,15 @@
 <?php
+$db_host = "localhost"; // Replace with your MySQL server host in docker compose
+$db_username = "erfan"; // Replace with your MySQL username
+$db_password = "1234"; // Replace with your MySQL password
+$db_database = "testdb"; // Replace with the name of your MySQL database
 
-$db_host = 'localhost';
-$db_user = 'erfan';
-$db_pass = '1234';
-$db_name = 'testdb';
+// Create a connection
+$conn = new mysqli($db_host, $db_username, $db_password, $db_database);
 
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}else {
-    // echo "Connection successful";
+// Check the connection
+if ($conn->connect_error) {    die("Connection failed: " . $conn->connect_error);
 }
 
+// echo "Connected successfully";
 ?>

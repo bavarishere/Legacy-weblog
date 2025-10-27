@@ -1,40 +1,50 @@
-<?php 
+<?php
+session_start();
 include 'header.php';
+include 'db.php';
+
+
 ?>
+
 <body>
-    <header class="header">
-        <div class="container is-max-tablet">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item is-active" href="index.php">Home</a>
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">Categories</a>
-                                <div class="navbar-dropdown">
-                                    <a class="navbar-item">XSS</a>
-                                    <a class="navbar-item">CSRF</a>
-                                    <a class="navbar-item">SQLi</a>
-                                </div>
-                        </div>
-                    <a class="navbar-item" href="about.php">About</a>
-                </div>
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary" href="register.php">
-                                <strong>Sign up</strong>
-                            </a>
-                            <a class="button is-light" href="login.php">
-                                <strong>Log in</strong>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="#">categories</a>
+                <ul>
+                <?php
+                    $sql = "SELECT category_id, category_name FROM category";
+                    $result = mysqli_query($conn, $sql);
+
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<li><a href="category.php?category_id=' . $row['category_id'] . '">' . htmlspecialchars($row['category_name']) . '</a></li>';
+                        }
+                    } else {
+                        echo '<li>No categories found</li>';
+                    }
+                ?>
+                </ul>
+            </li>
+                <li><a href="about.php">About</a></li>
+            </ul>
+            <?php if (isset($_SESSION['is_logged']) === true) {
+                $profileImage = !empty($_SESSION['profile_image']) 
+                ? $_SESSION['profile_image'] 
+                : 'uploads/profile_default.jpg';?>
+                <img src="<?php echo $profileImage; ?>" alt="Profile Image" style="width:24px;height:24x;">
+                <button><a href="dashboard.php"><?php echo $_SESSION['username']?></a>
+                <button><a href="logout.php">Logout</a>
+                </button>
+                <?php } else { ?>
+            <button><a href="login.php">Login</a>
+            <button><a href="register.php">Register</a></button>
+            <?php } ?>
         </nav>
-        </div>
     </header>
 </body>
 
-<?php 
+<?php
 include 'footer.php';
 ?>
